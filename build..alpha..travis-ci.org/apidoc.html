@@ -1,0 +1,331 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api-documentation for
+    <a
+        
+        href="http://github.com/floridoo/gulp-sourcemaps"
+        
+    >gulp-sourcemaps (v2.4.1)</a>
+</h1>
+<h4>Source map support for Gulp.js</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+    
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-sourcemaps">module gulp-sourcemaps</a><ol>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.init">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>init
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+            
+        </li>
+        
+        <li>
+            
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.write">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>write
+            <span class="apidocSignatureSpan">(destPath, options)</span>
+            </a>
+            
+        </li>
+        
+    </ol></li>
+    
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-sourcemaps" id="apidoc.module.gulp-sourcemaps">module gulp-sourcemaps</a></h1>
+    
+    
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.init" id="apidoc.element.gulp-sourcemaps.init">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>init
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function init(options) {
+  var debug = require(&#x27;debug-fabulous&#x27;)()(PLUGIN_NAME + &#x27;:init&#x27;);
+
+  function sourceMapInit(file, encoding, callback) {
+<span class="apidocCodeCommentSpan">    /*jshint validthis:true */
+</span>
+    // pass through if file is null or already has a source map
+    if (file.isNull() || file.sourceMap) {
+      this.push(file);
+      return callback();
+    }
+
+    if (file.isStream()) {
+      return callback(new Error(PLUGIN_NAME + &#x27;-init: Streaming not supported&#x27;));
+    }
+
+    if (options === undefined) {
+      options = {};
+    }
+    debug(function() {
+      return options;
+    });
+
+    var fileContent = file.contents.toString();
+    var sourceMap, preExistingComment;
+    var internals = initInternals(options, file, fileContent);
+
+    if (options.loadMaps) {
+      var result = internals.loadMaps();
+      sourceMap = result.map;
+      fileContent = result.content;
+      preExistingComment = result.preExistingComment;
+    }
+
+    if (!sourceMap &#x26;&#x26; options.identityMap) {
+      debug(function() {
+        return &#x27;identityMap&#x27;;
+      });
+      var fileType = path.extname(file.path);
+      var source = unixStylePath(file.relative);
+      var generator = new SourceMapGenerator({file: source});
+
+      if (fileType === &#x27;.js&#x27;) {
+        var tokenizer = acorn.tokenizer(fileContent, {locations: true});
+        while (true) {
+          var token = tokenizer.getToken();
+          if (token.type.label === &#x22;eof&#x22;)
+            break;
+          var mapping = {
+            original: token.loc.start,
+            generated: token.loc.start,
+            source: source
+          };
+          if (token.type.label === &#x27;name&#x27;) {
+            mapping.name = token.value;
+          }
+          generator.addMapping(mapping);
+        }
+        generator.setSourceContent(source, fileContent);
+        sourceMap = generator.toJSON();
+
+      } else if (fileType === &#x27;.css&#x27;) {
+        debug(&#x27;css&#x27;);
+        var ast = css.parse(fileContent, {silent: true});
+        debug(function() {
+          return ast;
+        });
+        var registerTokens = function(ast) {
+          if (ast.position) {
+            generator.addMapping({original: ast.position.start, generated: ast.position.start, source: source});
+          }
+
+          function logAst(key, ast) {
+            debug(function() {
+              return &#x27;key: &#x27; + key;
+            });
+            debug(function() {
+              return ast[key];
+            });
+          }
+
+          for (var key in ast) {
+            logAst(key, ast);
+            if (key !== &#x22;position&#x22;) {
+              if (Object.prototype.toString.call(ast[key]) === &#x27;[object Object]&#x27;) {
+                registerTokens(ast[key]);
+              } else if (Array.isArray(ast[key])) {
+                debug(function() {
+                  return &#x22;@@@@ ast[key] isArray @@@@&#x22;;
+                });
+                for (var i = 0; i &#x3c; ast[key].length; i++) {
+                  registerTokens(ast[key][i]);
+                }
+              }
+            }
+          }
+        };
+        registerTokens(ast);
+        generator.setSourceContent(source, fileContent);
+        sourceMap = generator.toJSON();
+      }
+    }
+
+    if (!sourceMap) {
+      // Make an empty source map
+      sourceMap = {
+        version: 3,
+        names: [],
+        mappings: &#x27;&#x27;,
+        sources: [unixStylePath(file.relative)],
+        sourcesContent: [fileContent]
+      };
+    }
+    else if(preExistingComment !== null &#x26;&#x26; typeof preExistingComment !== &#x27;undefined&#x27;)
+      sourceMap.preExistingComment = preExistingComment;
+
+    sourceMap.file = unixStylePath(file.relative);
+    file.sourceMap = sourceMap;
+
+    this.push(file);
+    callback();
+  }
+
+  return through.obj(sourceMapInit);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+var gulp = require(&#x27;gulp&#x27;);
+var plugin1 = require(&#x27;gulp-plugin1&#x27;);
+var plugin2 = require(&#x27;gulp-plugin2&#x27;);
+var sourcemaps = require(&#x27;gulp-sourcemaps&#x27;);
+
+gulp.task(&#x27;javascript&#x27;, function() {
+  gulp.src(&#x27;src/**/*.js&#x27;)
+    .pipe(sourcemaps.<span class="apidocCodeKeywordSpan">init</span>())
+      .pipe(plugin1())
+      .pipe(plugin2())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(&#x27;dist&#x27;));
+});
+```
+...</pre></li>
+    </ul>
+    
+    
+    
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.write" id="apidoc.element.gulp-sourcemaps.write">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>write
+        <span class="apidocSignatureSpan">(destPath, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function write(destPath, options) {
+  var debug = require(&#x27;debug-fabulous&#x27;)()(PLUGIN_NAME + &#x27;:write&#x27;);
+
+  debug(utils.logCb(&#x22;destPath&#x22;));
+  debug(utils.logCb(destPath));
+
+  debug(utils.logCb(&#x22;original options&#x22;));
+  debug(utils.logCb(options));
+
+  if (options === undefined &#x26;&#x26; typeof destPath !== &#x27;string&#x27;) {
+    options = destPath;
+    destPath = undefined;
+  }
+  options = options || {};
+
+  // set defaults for options if unset
+  if (options.includeContent === undefined)
+    options.includeContent = true;
+  if (options.addComment === undefined)
+    options.addComment = true;
+  if (options.charset === undefined)
+    options.charset = &#x22;utf8&#x22;;
+
+  debug(utils.logCb(&#x22;derrived options&#x22;));
+  debug(utils.logCb(options));
+
+  var internals = internalsInit(destPath, options);
+
+  function sourceMapWrite(file, encoding, callback) {
+<span class="apidocCodeCommentSpan">    /*jshint validthis:true */
+</span>
+    if (file.isNull() || !file.sourceMap) {
+      this.push(file);
+      return callback();
+    }
+
+    if (file.isStream()) {
+      return callback(new Error(PLUGIN_NAME + &#x27;-write: Streaming not supported&#x27;));
+    }
+
+    // fix paths if Windows style paths
+    file.sourceMap.file = unixStylePath(file.relative);
+
+    internals.setSourceRoot(file);
+    internals.loadContent(file);
+    internals.mapSources(file);
+    internals.mapDestPath(file, this);
+
+    this.push(file);
+    callback();
+  }
+
+
+
+  return through.obj(sourceMapWrite);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+var sourcemaps = require(&#x27;gulp-sourcemaps&#x27;);
+
+gulp.task(&#x27;javascript&#x27;, function() {
+  gulp.src(&#x27;src/**/*.js&#x27;)
+    .pipe(sourcemaps.init())
+      .pipe(plugin1())
+      .pipe(plugin2())
+    .pipe(sourcemaps.<span class="apidocCodeKeywordSpan">write</span>())
+    .pipe(gulp.dest(&#x27;dist&#x27;));
+});
+```
+
+All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have support for `gulp-sourcemaps`. You can find a list\
+ of such plugins in the [wiki](https://github.com/floridoo/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support).
+...</pre></li>
+    </ul>
+    
+    
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
