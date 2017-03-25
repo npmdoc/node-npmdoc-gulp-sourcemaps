@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"gulp-sourcemaps",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "gulp-sourcemaps",
+    "description": "api documentation for [gulp-sourcemaps (v2.4.1)](http://github.com/floridoo/gulp-sourcemaps) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-gulp-sourcemaps.svg)](https://travis-ci.org/npmdoc/node-npmdoc-gulp-sourcemaps)",
     "devDependencies": {
-        "gulp-sourcemaps": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "gulp-sourcemaps": "*",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-gulp-sourcemaps",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-gulp-sourcemaps",
+    "keywords": [
+        "documentation",
+        "gulp-sourcemaps"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_gulp_sourcemaps.js",
+    "name": "npmdoc-gulp-sourcemaps",
+    "nameAlias": "npmdoc_gulp_sourcemaps",
+    "nameOriginal": "npmdoc-gulp-sourcemaps",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-gulp-sourcemaps.git"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
-    "version": "0.0.1"
+    "version": "0.0.2"
 }
