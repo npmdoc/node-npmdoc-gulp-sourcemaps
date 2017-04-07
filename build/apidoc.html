@@ -51,7 +51,7 @@
 
         href="http://github.com/floridoo/gulp-sourcemaps"
 
-    >gulp-sourcemaps (v2.4.1)</a>
+    >gulp-sourcemaps (v2.5.1)</a>
 </h1>
 <h4>Source map support for Gulp.js</h4>
 <div class="apidocSectionDiv"><a
@@ -72,10 +72,86 @@
 
         <li>
 
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.mapSources">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>mapSources
+            <span class="apidocSignatureSpan">(mapFn)</span>
+            </a>
+
+        </li>
+
+        <li>
+
             <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.write">
             function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>write
             <span class="apidocSignatureSpan">(destPath, options)</span>
             </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">gulp-sourcemaps.</span>utils</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-sourcemaps.utils">module gulp-sourcemaps.utils</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.utils.getCommentFormatter">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>getCommentFormatter
+            <span class="apidocSignatureSpan">(file)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.utils.getInlinePreExisting">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>getInlinePreExisting
+            <span class="apidocSignatureSpan">(fileContent)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.utils.logCb">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>logCb
+            <span class="apidocSignatureSpan">(toLog)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.utils.sourceMapUrlRegEx">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>sourceMapUrlRegEx
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.utils.unixStylePath">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>unixStylePath
+            <span class="apidocSignatureSpan">(filePath)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>urlRegex</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>PLUGIN_NAME</span>
 
         </li>
 
@@ -240,6 +316,57 @@ gulp.task(&#x27;javascript&#x27;, function() {
 
 
     <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.mapSources" id="apidoc.element.gulp-sourcemaps.mapSources">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>mapSources
+        <span class="apidocSignatureSpan">(mapFn)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function mapSources(mapFn) {
+
+  function transform(file, _, cb) {
+    if (!file.sourceMap || !file.sourceMap.sources) {
+      return cb(null, file);
+    }
+
+    function mapper(sourcePath) {
+      var result = sourcePath;
+      if (typeof mapFn === &#x27;function&#x27;) {
+        result = mapFn(sourcePath, file);
+      }
+
+      return normalize(result);
+    }
+
+    file.sourceMap.sources = file.sourceMap.sources.map(mapper);
+
+    cb(null, file);
+  }
+
+  return through.obj(transform);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+```javascript
+gulp.task(&#x27;javascript&#x27;, function() {
+  var stream = gulp.src(&#x27;src/**/*.js&#x27;)
+    .pipe(sourcemaps.init())
+      .pipe(plugin1())
+      .pipe(plugin2())
+      // be careful with the sources returned otherwise contents might not be loaded properly
+      .pipe(sourcemaps.<span class="apidocCodeKeywordSpan">mapSources</span>(function(sourcePath, file) {
+        // source paths are prefixed with &#x27;../src/&#x27;
+        return &#x27;../src/&#x27; + sourcePath;
+      }))
+    .pipe(sourcemaps.write(&#x27;../maps&#x27;)
+    .pipe(gulp.dest(&#x27;public/scripts&#x27;));
+});
+```
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
         <a href="#apidoc.element.gulp-sourcemaps.write" id="apidoc.element.gulp-sourcemaps.write">
         function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>write
         <span class="apidocSignatureSpan">(destPath, options)</span>
@@ -319,6 +446,127 @@ All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have su
  of such plugins in the [wiki](https://github.com/floridoo/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support).
 ...</pre></li>
     </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-sourcemaps.utils" id="apidoc.module.gulp-sourcemaps.utils">module gulp-sourcemaps.utils</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.utils.getCommentFormatter" id="apidoc.element.gulp-sourcemaps.utils.getCommentFormatter">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>getCommentFormatter
+        <span class="apidocSignatureSpan">(file)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getCommentFormatter = function (file) {
+  var extension = file.relative.split(&#x27;.&#x27;).pop(),
+    fileContents =  file.contents.toString(),
+    newline =  detectNewline.graceful(fileContents || &#x27;&#x27;),
+    commentFormatter = function(url) {
+      return &#x27;&#x27;;
+    };
+
+  if (file.sourceMap.preExistingComment){
+    debug(logCb(&#x27;preExistingComment commentFormatter&#x27;));
+    commentFormatter = function(url) {
+      return &#x22;//# sourceMappingURL=&#x22; + url + newline;
+    };
+    return commentFormatter;
+  }
+
+  switch (extension) {
+    case &#x27;css&#x27;:
+      debug(logCb(&#x27;css commentFormatter&#x27;));
+      commentFormatter = function(url) {
+        return newline + &#x22;/*# sourceMappingURL=&#x22; + url + &#x22; */&#x22; + newline;
+      };
+      break;
+    case &#x27;js&#x27;:
+      debug(logCb(&#x27;js commentFormatter&#x27;));
+      commentFormatter = function(url) {
+        return newline + &#x22;//# sourceMappingURL=&#x22; + url + newline;
+      };
+      break;
+    default:
+      debug(logCb(&#x27;unknown commentFormatter&#x27;));
+  }
+
+  return commentFormatter;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.utils.getInlinePreExisting" id="apidoc.element.gulp-sourcemaps.utils.getInlinePreExisting">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>getInlinePreExisting
+        <span class="apidocSignatureSpan">(fileContent)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">getInlinePreExisting = function (fileContent){
+  if(sourceMapUrlRegEx().test(fileContent)){
+    debug(logCb(&#x27;has preExisting&#x27;));
+    return fileContent.match(sourceMapUrlRegEx())[0];
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.utils.logCb" id="apidoc.element.gulp-sourcemaps.utils.logCb">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>logCb
+        <span class="apidocSignatureSpan">(toLog)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function logCb(toLog){
+  return function() {
+    return toLog;
+  };
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.utils.sourceMapUrlRegEx" id="apidoc.element.gulp-sourcemaps.utils.sourceMapUrlRegEx">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>sourceMapUrlRegEx
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">sourceMapUrlRegEx = function (){ return /\/\/\# sourceMappingURL\=.*/g;}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.utils.unixStylePath" id="apidoc.element.gulp-sourcemaps.utils.unixStylePath">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>unixStylePath
+        <span class="apidocSignatureSpan">(filePath)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function unixStylePath(filePath) {
+  return filePath.split(path.sep).join(&#x27;/&#x27;);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
 
 
 </div>

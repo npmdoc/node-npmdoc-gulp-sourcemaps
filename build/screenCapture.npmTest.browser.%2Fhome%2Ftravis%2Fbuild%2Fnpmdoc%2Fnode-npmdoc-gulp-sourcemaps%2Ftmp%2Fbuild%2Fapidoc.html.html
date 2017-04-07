@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="http://github.com/floridoo/gulp-sourcemaps"
-
-    >gulp-sourcemaps (v2.5.1)</a>
+    <a href="http://github.com/floridoo/gulp-sourcemaps">gulp-sourcemaps (v2.5.1)</a>
 </h1>
 <h4>Source map support for Gulp.js</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-sourcemaps">module gulp-sourcemaps</a><ol>
 
@@ -171,7 +164,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function init(options) {
-  var debug = require(&#x27;debug-fabulous&#x27;)()(PLUGIN_NAME + &#x27;:init&#x27;);
+  var debug = require('debug-fabulous')()(PLUGIN_NAME + ':init');
 
   function sourceMapInit(file, encoding, callback) {
 <span class="apidocCodeCommentSpan">    /*jshint validthis:true */
@@ -183,7 +176,7 @@
     }
 
     if (file.isStream()) {
-      return callback(new Error(PLUGIN_NAME + &#x27;-init: Streaming not supported&#x27;));
+      return callback(new Error(PLUGIN_NAME + '-init: Streaming not supported'));
     }
 
     if (options === undefined) {
@@ -204,26 +197,26 @@
       preExistingComment = result.preExistingComment;
     }
 
-    if (!sourceMap &#x26;&#x26; options.identityMap) {
+    if (!sourceMap &amp;&amp; options.identityMap) {
       debug(function() {
-        return &#x27;identityMap&#x27;;
+        return 'identityMap';
       });
       var fileType = path.extname(file.path);
       var source = unixStylePath(file.relative);
       var generator = new SourceMapGenerator({file: source});
 
-      if (fileType === &#x27;.js&#x27;) {
+      if (fileType === '.js') {
         var tokenizer = acorn.tokenizer(fileContent, {locations: true});
         while (true) {
           var token = tokenizer.getToken();
-          if (token.type.label === &#x22;eof&#x22;)
+          if (token.type.label === "eof")
             break;
           var mapping = {
             original: token.loc.start,
             generated: token.loc.start,
             source: source
           };
-          if (token.type.label === &#x27;name&#x27;) {
+          if (token.type.label === 'name') {
             mapping.name = token.value;
           }
           generator.addMapping(mapping);
@@ -231,8 +224,8 @@
         generator.setSourceContent(source, fileContent);
         sourceMap = generator.toJSON();
 
-      } else if (fileType === &#x27;.css&#x27;) {
-        debug(&#x27;css&#x27;);
+      } else if (fileType === '.css') {
+        debug('css');
         var ast = css.parse(fileContent, {silent: true});
         debug(function() {
           return ast;
@@ -244,7 +237,7 @@
 
           function logAst(key, ast) {
             debug(function() {
-              return &#x27;key: &#x27; + key;
+              return 'key: ' + key;
             });
             debug(function() {
               return ast[key];
@@ -253,14 +246,14 @@
 
           for (var key in ast) {
             logAst(key, ast);
-            if (key !== &#x22;position&#x22;) {
-              if (Object.prototype.toString.call(ast[key]) === &#x27;[object Object]&#x27;) {
+            if (key !== "position") {
+              if (Object.prototype.toString.call(ast[key]) === '[object Object]') {
                 registerTokens(ast[key]);
               } else if (Array.isArray(ast[key])) {
                 debug(function() {
-                  return &#x22;@@@@ ast[key] isArray @@@@&#x22;;
+                  return "@@@@ ast[key] isArray @@@@";
                 });
-                for (var i = 0; i &#x3c; ast[key].length; i++) {
+                for (var i = 0; i &lt; ast[key].length; i++) {
                   registerTokens(ast[key][i]);
                 }
               }
@@ -278,12 +271,12 @@
       sourceMap = {
         version: 3,
         names: [],
-        mappings: &#x27;&#x27;,
+        mappings: '',
         sources: [unixStylePath(file.relative)],
         sourcesContent: [fileContent]
       };
     }
-    else if(preExistingComment !== null &#x26;&#x26; typeof preExistingComment !== &#x27;undefined&#x27;)
+    else if(preExistingComment !== null &amp;&amp; typeof preExistingComment !== 'undefined')
       sourceMap.preExistingComment = preExistingComment;
 
     sourceMap.file = unixStylePath(file.relative);
@@ -296,18 +289,18 @@
   return through.obj(sourceMapInit);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-var gulp = require(&#x27;gulp&#x27;);
-var plugin1 = require(&#x27;gulp-plugin1&#x27;);
-var plugin2 = require(&#x27;gulp-plugin2&#x27;);
-var sourcemaps = require(&#x27;gulp-sourcemaps&#x27;);
+var gulp = require('gulp');
+var plugin1 = require('gulp-plugin1');
+var plugin2 = require('gulp-plugin2');
+var sourcemaps = require('gulp-sourcemaps');
 
-gulp.task(&#x27;javascript&#x27;, function() {
-  gulp.src(&#x27;src/**/*.js&#x27;)
+gulp.task('javascript', function() {
+  gulp.src('src/**/*.js')
     .pipe(sourcemaps.<span class="apidocCodeKeywordSpan">init</span>())
       .pipe(plugin1())
       .pipe(plugin2())
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest(&#x27;dist&#x27;));
+    .pipe(gulp.dest('dist'));
 });
 ```
 ...</pre></li>
@@ -331,7 +324,7 @@ gulp.task(&#x27;javascript&#x27;, function() {
 
     function mapper(sourcePath) {
       var result = sourcePath;
-      if (typeof mapFn === &#x27;function&#x27;) {
+      if (typeof mapFn === 'function') {
         result = mapFn(sourcePath, file);
       }
 
@@ -347,18 +340,18 @@ gulp.task(&#x27;javascript&#x27;, function() {
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
 ```javascript
-gulp.task(&#x27;javascript&#x27;, function() {
-  var stream = gulp.src(&#x27;src/**/*.js&#x27;)
+gulp.task('javascript', function() {
+  var stream = gulp.src('src/**/*.js')
     .pipe(sourcemaps.init())
       .pipe(plugin1())
       .pipe(plugin2())
       // be careful with the sources returned otherwise contents might not be loaded properly
       .pipe(sourcemaps.<span class="apidocCodeKeywordSpan">mapSources</span>(function(sourcePath, file) {
-        // source paths are prefixed with &#x27;../src/&#x27;
-        return &#x27;../src/&#x27; + sourcePath;
+        // source paths are prefixed with '../src/'
+        return '../src/' + sourcePath;
       }))
-    .pipe(sourcemaps.write(&#x27;../maps&#x27;)
-    .pipe(gulp.dest(&#x27;public/scripts&#x27;));
+    .pipe(sourcemaps.write('../maps')
+    .pipe(gulp.dest('public/scripts'));
 });
 ```
 ...</pre></li>
@@ -374,15 +367,15 @@ gulp.task(&#x27;javascript&#x27;, function() {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function write(destPath, options) {
-  var debug = require(&#x27;debug-fabulous&#x27;)()(PLUGIN_NAME + &#x27;:write&#x27;);
+  var debug = require('debug-fabulous')()(PLUGIN_NAME + ':write');
 
-  debug(utils.logCb(&#x22;destPath&#x22;));
+  debug(utils.logCb("destPath"));
   debug(utils.logCb(destPath));
 
-  debug(utils.logCb(&#x22;original options&#x22;));
+  debug(utils.logCb("original options"));
   debug(utils.logCb(options));
 
-  if (options === undefined &#x26;&#x26; typeof destPath !== &#x27;string&#x27;) {
+  if (options === undefined &amp;&amp; typeof destPath !== 'string') {
     options = destPath;
     destPath = undefined;
   }
@@ -394,9 +387,9 @@ gulp.task(&#x27;javascript&#x27;, function() {
   if (options.addComment === undefined)
     options.addComment = true;
   if (options.charset === undefined)
-    options.charset = &#x22;utf8&#x22;;
+    options.charset = "utf8";
 
-  debug(utils.logCb(&#x22;derrived options&#x22;));
+  debug(utils.logCb("derrived options"));
   debug(utils.logCb(options));
 
   var internals = internalsInit(destPath, options);
@@ -410,7 +403,7 @@ gulp.task(&#x27;javascript&#x27;, function() {
     }
 
     if (file.isStream()) {
-      return callback(new Error(PLUGIN_NAME + &#x27;-write: Streaming not supported&#x27;));
+      return callback(new Error(PLUGIN_NAME + '-write: Streaming not supported'));
     }
 
     // fix paths if Windows style paths
@@ -430,15 +423,15 @@ gulp.task(&#x27;javascript&#x27;, function() {
   return through.obj(sourceMapWrite);
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">...
-var sourcemaps = require(&#x27;gulp-sourcemaps&#x27;);
+var sourcemaps = require('gulp-sourcemaps');
 
-gulp.task(&#x27;javascript&#x27;, function() {
-  gulp.src(&#x27;src/**/*.js&#x27;)
+gulp.task('javascript', function() {
+  gulp.src('src/**/*.js')
     .pipe(sourcemaps.init())
       .pipe(plugin1())
       .pipe(plugin2())
     .pipe(sourcemaps.<span class="apidocCodeKeywordSpan">write</span>())
-    .pipe(gulp.dest(&#x27;dist&#x27;));
+    .pipe(gulp.dest('dist'));
 });
 ```
 
@@ -464,36 +457,36 @@ All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have su
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">getCommentFormatter = function (file) {
-  var extension = file.relative.split(&#x27;.&#x27;).pop(),
+  var extension = file.relative.split('.').pop(),
     fileContents =  file.contents.toString(),
-    newline =  detectNewline.graceful(fileContents || &#x27;&#x27;),
+    newline =  detectNewline.graceful(fileContents || ''),
     commentFormatter = function(url) {
-      return &#x27;&#x27;;
+      return '';
     };
 
   if (file.sourceMap.preExistingComment){
-    debug(logCb(&#x27;preExistingComment commentFormatter&#x27;));
+    debug(logCb('preExistingComment commentFormatter'));
     commentFormatter = function(url) {
-      return &#x22;//# sourceMappingURL=&#x22; + url + newline;
+      return "//# sourceMappingURL=" + url + newline;
     };
     return commentFormatter;
   }
 
   switch (extension) {
-    case &#x27;css&#x27;:
-      debug(logCb(&#x27;css commentFormatter&#x27;));
+    case 'css':
+      debug(logCb('css commentFormatter'));
       commentFormatter = function(url) {
-        return newline + &#x22;/*# sourceMappingURL=&#x22; + url + &#x22; */&#x22; + newline;
+        return newline + "/*# sourceMappingURL=" + url + " */" + newline;
       };
       break;
-    case &#x27;js&#x27;:
-      debug(logCb(&#x27;js commentFormatter&#x27;));
+    case 'js':
+      debug(logCb('js commentFormatter'));
       commentFormatter = function(url) {
-        return newline + &#x22;//# sourceMappingURL=&#x22; + url + newline;
+        return newline + "//# sourceMappingURL=" + url + newline;
       };
       break;
     default:
-      debug(logCb(&#x27;unknown commentFormatter&#x27;));
+      debug(logCb('unknown commentFormatter'));
   }
 
   return commentFormatter;
@@ -512,7 +505,7 @@ All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have su
     <ul>
     <li>description and source-code<pre class="apidocCodePre">getInlinePreExisting = function (fileContent){
   if(sourceMapUrlRegEx().test(fileContent)){
-    debug(logCb(&#x27;has preExisting&#x27;));
+    debug(logCb('has preExisting'));
     return fileContent.match(sourceMapUrlRegEx())[0];
   }
 }</pre></li>
@@ -559,7 +552,7 @@ All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have su
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function unixStylePath(filePath) {
-  return filePath.split(path.sep).join(&#x27;/&#x27;);
+  return filePath.split(path.sep).join('/');
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>
@@ -577,3 +570,4 @@ All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have su
     ]
 </div>
 </div>
+</body></html>
