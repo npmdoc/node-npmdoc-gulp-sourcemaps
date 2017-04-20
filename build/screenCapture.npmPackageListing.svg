@@ -1,16 +1,16 @@
 <svg height="206" width="720" xmlns="http://www.w3.org/2000/svg">
 <rect height="206" fill="#555" width="720"></rect>
 <text fill="#7f7" font-family="Courier New" font-size="12" xml:space="preserve">
-<tspan x="10" y="26">  0.  2017-04-20 11:25:26 +0000    34992 bytes  .</tspan>
-<tspan x="10" y="42">  1.  2017-04-20 11:25:26 +0000      751 bytes  LICENSE.md</tspan>
-<tspan x="10" y="58">  2.  2017-04-20 11:25:26 +0000    13301 bytes  README.md</tspan>
-<tspan x="10" y="74">  3.  2017-04-20 11:25:26 +0000      212 bytes  index.js</tspan>
-<tspan x="10" y="90">  4.  2017-04-20 11:25:26 +0000     1769 bytes  package.json</tspan>
-<tspan x="10" y="106">  5.  2017-04-20 11:25:26 +0000       87 bytes  src/debug.js</tspan>
-<tspan x="10" y="122">  6.  2017-04-20 11:25:26 +0000     3845 bytes  src/init/index.internals.js</tspan>
-<tspan x="10" y="138">  7.  2017-04-20 11:25:26 +0000     4158 bytes  src/init/index.js</tspan>
-<tspan x="10" y="154">  8.  2017-04-20 11:25:26 +0000     2162 bytes  src/utils.js</tspan>
-<tspan x="10" y="170">  9.  2017-04-20 11:25:26 +0000     6955 bytes  src/write/index.internals.js</tspan>
-<tspan x="10" y="186"> 10.  2017-04-20 11:25:26 +0000     1752 bytes  src/write/index.js</tspan>
+<tspan x="10" y="26">  0.  2017-04-20 11:26:30 +0000    34992 bytes  .</tspan>
+<tspan x="10" y="42">  1.  2017-04-20 11:26:30 +0000      751 bytes  LICENSE.md</tspan>
+<tspan x="10" y="58">  2.  2017-04-20 11:26:30 +0000    13301 bytes  README.md</tspan>
+<tspan x="10" y="74">  3.  2017-04-20 11:26:30 +0000      212 bytes  index.js</tspan>
+<tspan x="10" y="90">  4.  2017-04-20 11:26:30 +0000     1769 bytes  package.json</tspan>
+<tspan x="10" y="106">  5.  2017-04-20 11:26:30 +0000       87 bytes  src/debug.js</tspan>
+<tspan x="10" y="122">  6.  2017-04-20 11:26:30 +0000     3845 bytes  src/init/index.internals.js</tspan>
+<tspan x="10" y="138">  7.  2017-04-20 11:26:30 +0000     4158 bytes  src/init/index.js</tspan>
+<tspan x="10" y="154">  8.  2017-04-20 11:26:30 +0000     2162 bytes  src/utils.js</tspan>
+<tspan x="10" y="170">  9.  2017-04-20 11:26:30 +0000     6955 bytes  src/write/index.internals.js</tspan>
+<tspan x="10" y="186"> 10.  2017-04-20 11:26:30 +0000     1752 bytes  src/write/index.js</tspan>
 </text>
 </svg>
