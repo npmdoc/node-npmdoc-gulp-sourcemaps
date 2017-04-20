@@ -49,9 +49,9 @@
 <h1>api documentation for
     <a
 
-        href="http://github.com/floridoo/gulp-sourcemaps"
+        href="http://github.com/gulp-sourcemaps/gulp-sourcemaps"
 
-    >gulp-sourcemaps (v2.5.1)</a>
+    >gulp-sourcemaps (v2.6.0)</a>
 </h1>
 <h4>Source map support for Gulp.js</h4>
 <div class="apidocSectionDiv"><a
@@ -60,6 +60,24 @@
 ><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-sourcemaps">module gulp-sourcemaps</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.debug">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>debug
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.identityMap">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>identityMap
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
 
         <li>
 
@@ -96,6 +114,58 @@
 
     </ol></li>
 
+    <li class="apidocModuleLi"><a href="#apidoc.module.gulp-sourcemaps.debug">module gulp-sourcemaps.debug</a><ol>
+
+        <li>
+
+            <span class="apidocSignatureSpan">boolean <span class="apidocSignatureSpan">gulp-sourcemaps.debug.</span>enabled</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">boolean <span class="apidocSignatureSpan">gulp-sourcemaps.debug.</span>useColors</span>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.debug.debug">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>debug
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.debug.spawn">
+            function <span class="apidocSignatureSpan">gulp-sourcemaps.debug.</span>spawn
+            <span class="apidocSignatureSpan">(ns)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">number <span class="apidocSignatureSpan">gulp-sourcemaps.debug.</span>color</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">gulp-sourcemaps.debug.</span>inspectOpts</span>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">string <span class="apidocSignatureSpan">gulp-sourcemaps.debug.</span>namespace</span>
+
+        </li>
+
+    </ol></li>
+
     <li class="apidocModuleLi"><a href="#apidoc.module.gulp-sourcemaps.utils">module gulp-sourcemaps.utils</a><ol>
 
         <li>
@@ -112,15 +182,6 @@
             <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.utils.getInlinePreExisting">
             function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>getInlinePreExisting
             <span class="apidocSignatureSpan">(fileContent)</span>
-            </a>
-
-        </li>
-
-        <li>
-
-            <a class="apidocElementLiA" href="#apidoc.element.gulp-sourcemaps.utils.logCb">
-            function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>logCb
-            <span class="apidocSignatureSpan">(toLog)</span>
             </a>
 
         </li>
@@ -164,6 +225,72 @@
 
 
     <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.debug" id="apidoc.element.gulp-sourcemaps.debug">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>debug
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">debug = function (){}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.identityMap" id="apidoc.element.gulp-sourcemaps.identityMap">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>identityMap
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function identityMap() {
+
+  function transform(file, _, cb) {
+    if (!file.sourceMap || !file.isBuffer()) {
+      return cb(null, file);
+    }
+
+    var sourcePath = normalizePath(file.relative);
+    var contents = file.contents.toString();
+
+    switch (file.extname) {
+      case &#x27;.js&#x27;: {
+        file.sourceMap = generate.js(sourcePath, contents);
+        break;
+      }
+      case &#x27;.css&#x27;: {
+        file.sourceMap = generate.css(sourcePath, contents);
+        break;
+      }
+    }
+
+    cb(null, file);
+  }
+
+  return through.obj(transform);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Example:
+```javascript
+gulp.task(&#x27;javascript&#x27;, function() {
+  var stream = gulp.src(&#x27;src/**/*.js&#x27;)
+    .pipe(sourcemaps.init())
+      // An identity sourcemap will be generated at this step
+      .pipe(sourcemaps.<span class="apidocCodeKeywordSpan">identityMap</span>())
+      .pipe(plugin1())
+      .pipe(plugin2())
+    .pipe(sourcemaps.write(&#x27;../maps&#x27;)
+    .pipe(gulp.dest(&#x27;public/scripts&#x27;));
+});
+```
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
         <a href="#apidoc.element.gulp-sourcemaps.init" id="apidoc.element.gulp-sourcemaps.init">
         function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>init
         <span class="apidocSignatureSpan">(options)</span>
@@ -171,7 +298,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function init(options) {
-  var debug = require(&#x27;debug-fabulous&#x27;)()(PLUGIN_NAME + &#x27;:init&#x27;);
+  var debug = require(&#x27;../debug&#x27;).spawn(&#x27;init&#x27;);
 
   function sourceMapInit(file, encoding, callback) {
 <span class="apidocCodeCommentSpan">    /*jshint validthis:true */
@@ -183,7 +310,7 @@
     }
 
     if (file.isStream()) {
-      return callback(new Error(PLUGIN_NAME + &#x27;-init: Streaming not supported&#x27;));
+      return callback(new Error(utils.PLUGIN_NAME + &#x27;-init: Streaming not supported&#x27;));
     }
 
     if (options === undefined) {
@@ -205,6 +332,7 @@
     }
 
     if (!sourceMap &#x26;&#x26; options.identityMap) {
+      debug(function() { return &#x27;**identityMap option is deprecated, update to use sourcemap.identityMap stream**&#x27;; });
       debug(function() {
         return &#x27;identityMap&#x27;;
       });
@@ -374,13 +502,13 @@ gulp.task(&#x27;javascript&#x27;, function() {
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">function write(destPath, options) {
-  var debug = require(&#x27;debug-fabulous&#x27;)()(PLUGIN_NAME + &#x27;:write&#x27;);
+  var debug = require(&#x27;../debug&#x27;).spawn(&#x27;write&#x27;);
 
-  debug(utils.logCb(&#x22;destPath&#x22;));
-  debug(utils.logCb(destPath));
+  debug(function() { return &#x22;destPath&#x22;; });
+  debug(function() { return destPath; });
 
-  debug(utils.logCb(&#x22;original options&#x22;));
-  debug(utils.logCb(options));
+  debug(function() { return &#x22;original options&#x22;;});
+  debug(function() { return options; });
 
   if (options === undefined &#x26;&#x26; typeof destPath !== &#x27;string&#x27;) {
     options = destPath;
@@ -396,8 +524,8 @@ gulp.task(&#x27;javascript&#x27;, function() {
   if (options.charset === undefined)
     options.charset = &#x22;utf8&#x22;;
 
-  debug(utils.logCb(&#x22;derrived options&#x22;));
-  debug(utils.logCb(options));
+  debug(function() { return &#x22;derrived options&#x22;; });
+  debug(function() { return options; });
 
   var internals = internalsInit(destPath, options);
 
@@ -410,7 +538,7 @@ gulp.task(&#x27;javascript&#x27;, function() {
     }
 
     if (file.isStream()) {
-      return callback(new Error(PLUGIN_NAME + &#x27;-write: Streaming not supported&#x27;));
+      return callback(new Error(utils.PLUGIN_NAME + &#x27;-write: Streaming not supported&#x27;));
     }
 
     // fix paths if Windows style paths
@@ -443,9 +571,70 @@ gulp.task(&#x27;javascript&#x27;, function() {
 ```
 
 All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have support for `gulp-sourcemaps`. You can find a list
- of such plugins in the [wiki](https://github.com/floridoo/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support).
+ of such plugins in the [wiki](https://github.com/gulp-sourcemaps/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support).
 ...</pre></li>
     </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.gulp-sourcemaps.debug" id="apidoc.module.gulp-sourcemaps.debug">module gulp-sourcemaps.debug</a></h1>
+
+
+
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.debug.debug" id="apidoc.element.gulp-sourcemaps.debug.debug">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.</span>debug
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">debug = function (){}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.gulp-sourcemaps.debug.spawn" id="apidoc.element.gulp-sourcemaps.debug.spawn">
+        function <span class="apidocSignatureSpan">gulp-sourcemaps.debug.</span>spawn
+        <span class="apidocSignatureSpan">(ns)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">spawn = function (ns) {
+  var dbg = new Debugger(this.namespace, ns);
+
+  return dbg.debug;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  return filePath.split(path.sep).join(&#x27;/&#x27;);
+}
+
+var PLUGIN_NAME = require(&#x27;../package.json&#x27;).name;
+
+var urlRegex = /^(https?|webpack(-[^:]+)?):\/\//;
+
+var debug = require(&#x27;./debug&#x27;).<span class="apidocCodeKeywordSpan">spawn</span>(&#x27;utils&#x27;);
+/*
+So reusing the same ref for a regex (with global (g)) is from a poor decision in js.
+See http://stackoverflow.com/questions/10229144/bug-with-regexp-in-javascript-when-do-global-search
+
+So we either need to use a new instance of a regex everywhere.
+*/
+var sourceMapUrlRegEx = function(){ return /\/\/\# sourceMappingURL\=.*/g;};
+...</pre></li>
+    </ul>
+
+
+
+
 
 
 
@@ -472,7 +661,7 @@ All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have su
     };
 
   if (file.sourceMap.preExistingComment){
-    debug(logCb(&#x27;preExistingComment commentFormatter&#x27;));
+    debug(function() { return &#x27;preExistingComment commentFormatter&#x27;; });
     commentFormatter = function(url) {
       return &#x22;//# sourceMappingURL=&#x22; + url + newline;
     };
@@ -481,19 +670,19 @@ All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have su
 
   switch (extension) {
     case &#x27;css&#x27;:
-      debug(logCb(&#x27;css commentFormatter&#x27;));
+      debug(function() { return &#x27;css commentFormatter&#x27;;});
       commentFormatter = function(url) {
         return newline + &#x22;/*# sourceMappingURL=&#x22; + url + &#x22; */&#x22; + newline;
       };
       break;
     case &#x27;js&#x27;:
-      debug(logCb(&#x27;js commentFormatter&#x27;));
+      debug(function() { return &#x27;js commentFormatter&#x27;; });
       commentFormatter = function(url) {
         return newline + &#x22;//# sourceMappingURL=&#x22; + url + newline;
       };
       break;
     default:
-      debug(logCb(&#x27;unknown commentFormatter&#x27;));
+      debug(function() { return &#x27;unknown commentFormatter&#x27;; });
   }
 
   return commentFormatter;
@@ -512,26 +701,9 @@ All plugins between `sourcemaps.init()` and `sourcemaps.write()` need to have su
     <ul>
     <li>description and source-code<pre class="apidocCodePre">getInlinePreExisting = function (fileContent){
   if(sourceMapUrlRegEx().test(fileContent)){
-    debug(logCb(&#x27;has preExisting&#x27;));
+    debug(function() { return &#x27;has preExisting&#x27;; });
     return fileContent.match(sourceMapUrlRegEx())[0];
   }
-}</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
-    </ul>
-
-
-
-    <h2>
-        <a href="#apidoc.element.gulp-sourcemaps.utils.logCb" id="apidoc.element.gulp-sourcemaps.utils.logCb">
-        function <span class="apidocSignatureSpan">gulp-sourcemaps.utils.</span>logCb
-        <span class="apidocSignatureSpan">(toLog)</span>
-        </a>
-    </h2>
-    <ul>
-    <li>description and source-code<pre class="apidocCodePre">function logCb(toLog){
-  return function() {
-    return toLog;
-  };
 }</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
     </ul>

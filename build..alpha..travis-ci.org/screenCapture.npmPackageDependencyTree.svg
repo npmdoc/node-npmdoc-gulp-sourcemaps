@@ -1,45 +1,46 @@
-<svg height="670" width="720" xmlns="http://www.w3.org/2000/svg">
-<rect height="670" fill="#555" width="720"></rect>
+<svg height="686" width="720" xmlns="http://www.w3.org/2000/svg">
+<rect height="686" fill="#555" width="720"></rect>
 <text fill="#7f7" font-family="Courier New" font-size="12" xml:space="preserve">
-<tspan x="10" y="26">4 megabytes installed</tspan>
+<tspan x="10" y="26">5 megabytes installed</tspan>
 <tspan x="10" y="42"></tspan>
 <tspan x="10" y="58">node_modules</tspan>
-<tspan x="10" y="74">└─┬ gulp-sourcemaps@2.5.1 </tspan>
-<tspan x="10" y="90">  ├─┬ @gulp-sourcemaps/map-sources@1.0.0 </tspan>
-<tspan x="10" y="106">  │ └─┬ normalize-path@2.1.1 </tspan>
-<tspan x="10" y="122">  │   └── remove-trailing-separator@1.0.1 </tspan>
-<tspan x="10" y="138">  ├── acorn@4.0.11 </tspan>
-<tspan x="10" y="154">  ├── convert-source-map@1.5.0 </tspan>
-<tspan x="10" y="170">  ├─┬ css@2.2.1 </tspan>
-<tspan x="10" y="186">  │ ├── inherits@2.0.3 </tspan>
-<tspan x="10" y="202">  │ ├─┬ source-map@0.1.43 </tspan>
-<tspan x="10" y="218">  │ │ └── amdefine@1.0.1 </tspan>
-<tspan x="10" y="234">  │ ├─┬ source-map-resolve@0.3.1 </tspan>
-<tspan x="10" y="250">  │ │ ├── atob@1.1.3 </tspan>
-<tspan x="10" y="266">  │ │ ├── resolve-url@0.2.1 </tspan>
-<tspan x="10" y="282">  │ │ └── source-map-url@0.3.0 </tspan>
-<tspan x="10" y="298">  │ └── urix@0.1.0 </tspan>
-<tspan x="10" y="314">  ├─┬ debug-fabulous@0.0.4 </tspan>
-<tspan x="10" y="330">  │ ├─┬ debug@2.6.3 </tspan>
-<tspan x="10" y="346">  │ │ └── ms@0.7.2 </tspan>
-<tspan x="10" y="362">  │ ├── lazy-debug-legacy@0.0.1 </tspan>
-<tspan x="10" y="378">  │ └── object-assign@4.1.0 </tspan>
-<tspan x="10" y="394">  ├── detect-newline@2.1.0 </tspan>
-<tspan x="10" y="410">  ├── graceful-fs@4.1.11 </tspan>
-<tspan x="10" y="426">  ├── source-map@0.5.6 </tspan>
-<tspan x="10" y="442">  ├── strip-bom-string@1.0.0 </tspan>
-<tspan x="10" y="458">  ├─┬ through2@2.0.3 </tspan>
-<tspan x="10" y="474">  │ ├─┬ readable-stream@2.2.8 </tspan>
-<tspan x="10" y="490">  │ │ ├── buffer-shims@1.0.0 </tspan>
-<tspan x="10" y="506">  │ │ ├── core-util-is@1.0.2 </tspan>
-<tspan x="10" y="522">  │ │ ├── isarray@1.0.0 </tspan>
-<tspan x="10" y="538">  │ │ ├── process-nextick-args@1.0.7 </tspan>
-<tspan x="10" y="554">  │ │ ├── string_decoder@1.0.0 </tspan>
-<tspan x="10" y="570">  │ │ └── util-deprecate@1.0.2 </tspan>
-<tspan x="10" y="586">  │ └── xtend@4.0.1 </tspan>
-<tspan x="10" y="602">  └─┬ vinyl@1.2.0 </tspan>
-<tspan x="10" y="618">    ├── clone@1.0.2 </tspan>
-<tspan x="10" y="634">    ├── clone-stats@0.0.1 </tspan>
-<tspan x="10" y="650">    └── replace-ext@0.0.1</tspan>
+<tspan x="10" y="74">└─┬ gulp-sourcemaps@2.6.0 </tspan>
+<tspan x="10" y="90">  ├─┬ @gulp-sourcemaps/identity-map@1.0.0 </tspan>
+<tspan x="10" y="106">  │ ├── acorn@5.0.3 </tspan>
+<tspan x="10" y="122">  │ └─┬ normalize-path@2.1.1 </tspan>
+<tspan x="10" y="138">  │   └── remove-trailing-separator@1.0.1 </tspan>
+<tspan x="10" y="154">  ├── @gulp-sourcemaps/map-sources@1.0.0 </tspan>
+<tspan x="10" y="170">  ├── acorn@4.0.11 </tspan>
+<tspan x="10" y="186">  ├── convert-source-map@1.5.0 </tspan>
+<tspan x="10" y="202">  ├─┬ css@2.2.1 </tspan>
+<tspan x="10" y="218">  │ ├── inherits@2.0.3 </tspan>
+<tspan x="10" y="234">  │ ├─┬ source-map@0.1.43 </tspan>
+<tspan x="10" y="250">  │ │ └── amdefine@1.0.1 </tspan>
+<tspan x="10" y="266">  │ ├─┬ source-map-resolve@0.3.1 </tspan>
+<tspan x="10" y="282">  │ │ ├── atob@1.1.3 </tspan>
+<tspan x="10" y="298">  │ │ ├── resolve-url@0.2.1 </tspan>
+<tspan x="10" y="314">  │ │ └── source-map-url@0.3.0 </tspan>
+<tspan x="10" y="330">  │ └── urix@0.1.0 </tspan>
+<tspan x="10" y="346">  ├─┬ debug-fabulous@0.1.0 </tspan>
+<tspan x="10" y="362">  │ ├─┬ debug@2.6.3 </tspan>
+<tspan x="10" y="378">  │ │ └── ms@0.7.2 </tspan>
+<tspan x="10" y="394">  │ └── object-assign@4.1.0 </tspan>
+<tspan x="10" y="410">  ├── detect-newline@2.1.0 </tspan>
+<tspan x="10" y="426">  ├── graceful-fs@4.1.11 </tspan>
+<tspan x="10" y="442">  ├── source-map@0.5.6 </tspan>
+<tspan x="10" y="458">  ├── strip-bom-string@1.0.0 </tspan>
+<tspan x="10" y="474">  ├─┬ through2@2.0.3 </tspan>
+<tspan x="10" y="490">  │ ├─┬ readable-stream@2.2.9 </tspan>
+<tspan x="10" y="506">  │ │ ├── buffer-shims@1.0.0 </tspan>
+<tspan x="10" y="522">  │ │ ├── core-util-is@1.0.2 </tspan>
+<tspan x="10" y="538">  │ │ ├── isarray@1.0.0 </tspan>
+<tspan x="10" y="554">  │ │ ├── process-nextick-args@1.0.7 </tspan>
+<tspan x="10" y="570">  │ │ ├── string_decoder@1.0.0 </tspan>
+<tspan x="10" y="586">  │ │ └── util-deprecate@1.0.2 </tspan>
+<tspan x="10" y="602">  │ └── xtend@4.0.1 </tspan>
+<tspan x="10" y="618">  └─┬ vinyl@1.2.0 </tspan>
+<tspan x="10" y="634">    ├── clone@1.0.2 </tspan>
+<tspan x="10" y="650">    ├── clone-stats@0.0.1 </tspan>
+<tspan x="10" y="666">    └── replace-ext@0.0.1</tspan>
 </text>
 </svg>
